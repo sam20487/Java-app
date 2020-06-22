@@ -1,19 +1,21 @@
 pipeline {
     agent any
+    tools { 
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8' 
+    }
     
     stages {
         stage('Build') {
             steps {
-                def mvnHome = tool name: 'maven', type: 'maven'
-                def mvnCMD = "${mvnHome}/bin/mvn"
-                sh "${mvnCMD} -B -DskipTests clean package"
+               
+                sh "mvn -B -DskipTests clean package"
             }
         }
         stage('Test') {
             steps {
-                def mvnHome = tool name: 'maven', type: 'maven'
-                def mvnCMD = "${mvnHome}/bin/mvn"
-                sh "${mvnCMD} test"
+                
+                sh "mvn test"
             }
             post {
                 always {
